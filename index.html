@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Marble Mania — Pembuat Video Marble Race untuk Shorts</title>
+  <meta name="description" content="Buat video marble race 9:16 yang seru untuk YouTube Shorts / TikTok / Reels. Banyak pemain, banyak mode, nama & gambar bisa diganti, rekam langsung dari browser.">
+  <meta name="theme-color" content="#0b0620">
+  <meta property="og:title" content="Marble Mania — Marble Race Maker">
+  <meta property="og:description" content="Balapan marble, Plinko, Sumo, Battle. Ganti nama & foto pemain, rekam, upload ke Shorts.">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lilita+One&display=swap">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="bg-orbs" aria-hidden="true"><i></i><i></i><i></i></div>
+
+  <header class="topbar">
+    <div class="brand">
+      <svg class="brand-mark" viewBox="0 0 64 64" aria-hidden="true">
+        <defs><radialGradient id="bm" cx="35%" cy="30%" r="75%"><stop offset="0" stop-color="#fff"/><stop offset=".25" stop-color="#ff7ae8"/><stop offset=".7" stop-color="#7a2cff"/><stop offset="1" stop-color="#2b0a6b"/></radialGradient></defs>
+        <circle cx="32" cy="32" r="28" fill="url(#bm)"/><ellipse cx="23" cy="19" rx="9" ry="5" fill="#fff" opacity=".7" transform="rotate(-35 23 19)"/>
+      </svg>
+      <div><h1>MARBLE <span>MANIA</span></h1><p>Studio balapan marble untuk Shorts</p></div>
+    </div>
+    <div class="top-actions">
+      <button class="btn ghost sm" id="btnFullTop" title="Layar penuh untuk screen-record (F)">⛶ Mode Rekam</button>
+    </div>
+  </header>
+
+  <main class="layout">
+    <!-- PANEL PENGATURAN -->
+    <section class="panel" id="panel">
+      <nav class="tabs" role="tablist">
+        <button class="tab active" data-tab="players" role="tab">👥 Pemain</button>
+        <button class="tab" data-tab="mode" role="tab">🎮 Mode</button>
+        <button class="tab" data-tab="look" role="tab">🎨 Tampilan</button>
+        <button class="tab" data-tab="rec" role="tab">🎬 Rekam</button>
+      </nav>
+
+      <div class="pane active" id="pane-players">
+        <div class="pane-head">
+          <div><b id="playerCount">0</b> pemain <span class="muted">(maks 100)</span></div>
+          <div class="chips" id="quickCounts"></div>
+        </div>
+        <div class="toolbar">
+          <button class="btn sm" id="btnAdd">＋ Tambah</button>
+          <button class="btn ghost sm" id="btnBulk">📋 Tempel nama</button>
+          <button class="btn ghost sm" id="btnShuffleColor">🎨 Acak warna</button>
+          <button class="btn ghost sm" id="btnShuffleOrder">🔀 Acak urutan</button>
+          <button class="btn ghost sm danger" id="btnClearImgs">🖼 Hapus gambar</button>
+        </div>
+        <ul class="plist" id="playerList"></ul>
+        <p class="hint">Klik lingkaran untuk memilih gambar (atau seret file gambar ke baris pemain). Gambar otomatis dipotong bulat &amp; dikecilkan.</p>
+      </div>
+
+      <div class="pane" id="pane-mode">
+        <div class="mode-grid" id="modeGrid"></div>
+        <div class="card" id="modeOptions"></div>
+      </div>
+
+      <div class="pane" id="pane-look">
+        <label class="lbl">Tema visual</label>
+        <div class="theme-grid" id="themeGrid"></div>
+        <label class="lbl" for="inTitle">Judul di atas video</label>
+        <input class="inp" id="inTitle" maxlength="48" placeholder="SIAPA YANG MENANG?">
+        <label class="lbl" for="inFooter">Teks bawah (ajakan)</label>
+        <input class="inp" id="inFooter" maxlength="60" placeholder="Like &amp; Subscribe!">
+        <div class="two">
+          <div><label class="lbl" for="selNames">Nama di marble</label>
+            <select class="inp" id="selNames"><option value="auto">Otomatis</option><option value="all">Selalu</option><option value="none">Sembunyikan</option></select></div>
+          <div><label class="lbl" for="selSpin">Gambar marble</label>
+            <select class="inp" id="selSpin"><option value="1">Ikut berputar</option><option value="0">Tetap tegak</option></select></div>
+          <div><label class="lbl" for="selSize">Ukuran marble</label>
+            <select class="inp" id="selSize"><option value="0.8">Kecil</option><option value="1" selected>Normal</option><option value="1.25">Besar</option></select></div>
+          <div><label class="lbl" for="selQuality">Resolusi video</label>
+            <select class="inp" id="selQuality"><option value="2">1080×1920 (HD)</option><option value="1.5">810×1440</option><option value="1">540×960 (ringan)</option></select></div>
+        </div>
+        <label class="lbl" for="rngSpeed">Kecepatan game: <b id="speedLbl">1×</b></label>
+        <input type="range" id="rngSpeed" min="0.5" max="2" step="0.25" value="1">
+        <div class="checks">
+          <label class="chk"><input type="checkbox" id="chkTrails" checked><span>Jejak marble</span></label>
+          <label class="chk"><input type="checkbox" id="chkSound" checked><span>Efek suara</span></label>
+          <label class="chk"><input type="checkbox" id="chkGuide"><span>Panduan area aman Shorts</span></label>
+        </div>
+      </div>
+
+      <div class="pane" id="pane-rec">
+        <div class="card">
+          <h3>🎥 Rekam otomatis</h3>
+          <label class="chk big"><input type="checkbox" id="chkAuto" checked><span>Mulai rekam saat hitung mundur, berhenti &amp; unduh otomatis setelah pemenang tampil</span></label>
+          <div class="toolbar">
+            <button class="btn sm" id="btnRecToggle">● Rekam manual</button>
+            <button class="btn ghost sm" id="btnDownload" hidden>⬇ Unduh video terakhir</button>
+          </div>
+          <p class="muted" id="recStatus">Format: —. Video menyertakan suara game.</p>
+        </div>
+        <div class="card">
+          <h3>📱 Cara upload ke YouTube Shorts</h3>
+          <ol class="steps">
+            <li>Atur pemain, mode &amp; tema, lalu aktifkan <b>Rekam otomatis</b>.</li>
+            <li>Tekan <b>MULAI</b>. Video 9:16 terekam &amp; terunduh sendiri setelah pemenang muncul.</li>
+            <li>Upload file di YouTube Studio / aplikasi YouTube (durasi ≤ 60 detik &amp; vertikal = Shorts).</li>
+            <li>Atau gunakan <b>Mode Rekam</b> (⛶) lalu screen-record dengan perekam bawaan HP/PC.</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- PANGGUNG -->
+    <section class="stage-col" id="stageCol">
+      <div class="stage-wrap" id="stageWrap">
+        <div class="stage-frame" id="stageFrame">
+          <canvas id="stage" aria-label="Arena marble"></canvas>
+          <div class="safe-guide" id="safeGuide" hidden><span>UI Shorts</span><i class="g-right"></i><i class="g-bottom"></i></div>
+          <div class="rec-badge" id="recBadge" hidden>● REC <b id="recTime">00:00</b></div>
+        </div>
+      </div>
+      <div class="controls" id="controls">
+        <button class="btn big go" id="btnStart">▶ MULAI</button>
+        <button class="btn icon" id="btnRestart" title="Reset / susun ulang (R)">⟲</button>
+        <button class="btn icon" id="btnPause" title="Jeda (P)">⏸</button>
+        <button class="btn icon" id="btnSound" title="Suara (M)">🔊</button>
+        <button class="btn icon" id="btnFull" title="Layar penuh (F)">⛶</button>
+      </div>
+    </section>
+  </main>
+
+  <dialog id="bulkDlg">
+    <form method="dialog">
+      <h3>Tempel daftar nama</h3>
+      <p class="muted">Satu nama per baris. Maksimal 100.</p>
+      <textarea id="bulkText" rows="10" placeholder="Andi&#10;Budi&#10;Citra"></textarea>
+      <div class="dlg-actions">
+        <button class="btn ghost sm" value="cancel">Batal</button>
+        <button class="btn ghost sm" id="bulkAppend" value="append">Tambahkan</button>
+        <button class="btn sm" id="bulkReplace" value="replace">Ganti semua</button>
+      </div>
+    </form>
+  </dialog>
+  <input type="file" id="fileInput" accept="image/*" hidden>
+  <div class="toast" id="toast" role="status"></div>
+  <noscript><p style="padding:2rem;color:#fff">Aplikasi ini membutuhkan JavaScript.</p></noscript>
+
+  <script src="js/utils.js"></script>
+  <script src="js/physics.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/game.js"></script>
+  <script src="js/mode-race.js"></script>
+  <script src="js/mode-arena.js"></script>
+  <script src="js/recorder.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

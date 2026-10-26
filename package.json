@@ -1,0 +1,10 @@
+{
+  "name": "marble-mania",
+  "version": "1.0.0",
+  "description": "Pembuat video marble race 9:16 untuk Shorts (situs statis, tanpa build).",
+  "private": true,
+  "scripts": {
+    "dev": "npx --yes serve . -l 3000"
+  },
+  "license": "MIT"
+}
