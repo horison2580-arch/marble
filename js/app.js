@@ -8,7 +8,7 @@
 
   const state = {
     players: [], mode: 'race', opts: {},
-    settings: { theme: 'neon', title: 'SIAPA YANG MENANG?', footer: 'Like & Subscribe!', names: 'auto', spin: true, trails: true, speed: 1, quality: 2, size: 1, sound: true, guide: false, auto: true },
+    settings: { theme: 'neon', title: 'SIAPA YANG MENANG?', footer: '', names: 'auto', spin: true, trails: true, speed: 1, quality: 2, size: 1, sound: true, guide: false, auto: true },
   };
   let game, saveT = 0, imgTarget = -1, autoStopT = 0;
 
